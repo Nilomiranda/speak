@@ -1,0 +1,23 @@
+<main class="border-2 border-red-500 h-screen w-screen flex flex-col items-center p-10">
+    <h1>Welcome to Speak</h1>
+    <h2>Speak to anyone, anytime, anywhere</h2>
+
+    <.form class="flex flex-col gap-y-6 mt-10 w-full max-w-md" action="/signup" method="POST">
+        <label class="flex flex-col">
+            <span>Email</span>
+            <input type="email" name="email" id="email" placeholder="name@domain.site" />
+        </label>
+
+        <label class="flex flex-col">
+            <span>Name</span>
+            <input type="text" name="name" id="name" placeholder="Your name to display in the chat" />
+        </label>
+
+        <label class="flex flex-col">
+            <span>Password</span>
+            <input type="password" name="password" id="password" placeholder="********" />
+        </label>
+
+        <button type="submit" class="__primary">Create account</button>
+    </.form>
+</main>

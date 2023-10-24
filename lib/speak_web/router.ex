@@ -19,7 +19,12 @@ defmodule SpeakWeb.Router do
 
     get "/", PageController, :home
 
-    get "/login", LoginController, :login
+    get "/login", LoginController, :index
+
+    scope "/signup" do
+      get "/", SignUpController, :index
+      post "/", SignUpController, :create
+    end
   end
 
   # Other scopes may use custom stacks.

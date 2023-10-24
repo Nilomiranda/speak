@@ -1,7 +1,7 @@
 defmodule SpeakWeb.LoginController do
   use SpeakWeb, :controller
 
-  def login(conn, _params) do
-    render(conn, :login, layout: false)
+  def index(conn, _params) do
+    render(conn, :index, layout: false)
   end
 end
