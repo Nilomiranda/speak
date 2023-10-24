@@ -22,12 +22,13 @@ defmodule SpeakWeb.Router do
 
     get "/", PageController, :home
 
-    get "/login", LoginController, :index
+    ## TODO: remove this commented code
+    # get "/login", LoginController, :index
 
-    scope "/signup" do
-      get "/", SignUpController, :index
-      post "/", SignUpController, :create
-    end
+    # scope "/signup" do
+    #   get "/", SignUpController, :index
+    #   post "/", SignUpController, :create
+    # end
   end
 
   # Other scopes may use custom stacks.
@@ -59,13 +60,13 @@ defmodule SpeakWeb.Router do
 
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{SpeakWeb.UserAuth, :redirect_if_user_is_authenticated}] do
-      live "/users/register", UserRegistrationLive, :new
-      live "/users/log_in", UserLoginLive, :new
-      live "/users/reset_password", UserForgotPasswordLive, :new
-      live "/users/reset_password/:token", UserResetPasswordLive, :edit
+      live "/sign-up", UserRegistrationLive, :new
+      live "/sign-in", UserLoginLive, :new
+      live "/reset-password", UserForgotPasswordLive, :new
+      live "/reset-password/:token", UserResetPasswordLive, :edit
     end
 
-    post "/users/log_in", UserSessionController, :create
+    post "/sign-up", UserSessionController, :create
   end
 
   scope "/", SpeakWeb do
@@ -81,7 +82,7 @@ defmodule SpeakWeb.Router do
   scope "/", SpeakWeb do
     pipe_through [:browser]
 
-    delete "/users/log_out", UserSessionController, :delete
+    delete "/logout", UserSessionController, :delete
 
     live_session :current_user,
       on_mount: [{SpeakWeb.UserAuth, :mount_current_user}] do
