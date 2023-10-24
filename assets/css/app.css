@@ -19,3 +19,7 @@ button.__primary {
 label span {
     @apply mb-2;
 }
+
+.text-brand {
+    @apply text-blue-900;
+}
