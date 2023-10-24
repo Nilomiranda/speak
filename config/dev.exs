@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :speak, Speak.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "admin",
+  password: "admin",
   hostname: "localhost",
   database: "speak_dev",
   stacktrace: true,
