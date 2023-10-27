@@ -66,7 +66,7 @@ defmodule SpeakWeb.Router do
       live "/reset-password/:token", UserResetPasswordLive, :edit
     end
 
-    post "/sign-up", UserSessionController, :create
+    post "/sign-in", UserSessionController, :create
   end
 
   scope "/", SpeakWeb do
