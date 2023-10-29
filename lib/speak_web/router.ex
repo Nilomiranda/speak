@@ -21,14 +21,6 @@ defmodule SpeakWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-
-    ## TODO: remove this commented code
-    # get "/login", LoginController, :index
-
-    # scope "/signup" do
-    #   get "/", SignUpController, :index
-    #   post "/", SignUpController, :create
-    # end
   end
 
   # Other scopes may use custom stacks.
