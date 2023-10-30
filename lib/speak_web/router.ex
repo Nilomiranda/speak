@@ -19,8 +19,6 @@ defmodule SpeakWeb.Router do
 
   scope "/", SpeakWeb do
     pipe_through :browser
-
-    get "/", PageController, :home
   end
 
   # Other scopes may use custom stacks.
@@ -66,6 +64,7 @@ defmodule SpeakWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{SpeakWeb.UserAuth, :ensure_authenticated}] do
+      live "/", HomeLive, :show
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end
