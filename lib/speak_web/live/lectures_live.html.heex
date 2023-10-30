@@ -3,8 +3,40 @@
 
 
     <%= if is_nil(@lectures) do%>
-        <p>You don't have any lectures yet. Let's start by creating one.</p>
+        <p>You don't have any lectures yet. <.link navigate={~p"/lectures/new"} class="text-brand hover:underline">Let's start by creating one.</.link></p>
     <% else %>
          <strong>Here are your lectures:</strong>
+
+         <ul>
+            <%= for lecture <- @lectures do %>
+                <li>
+                    <.link href={"/lectures/#{lecture.id}"} class="text-brand"><%= lecture.name %></.link>
+                </li>
+            <% end %>
+         </ul>
     <% end %>
+
+    <%= if @live_action === :new do %>
+        <h2>Creating a lecture</h2>
+
+        <.simple_form 
+            for={@form}
+            id="create_lecture_form"
+            phx-submit="save"
+            phx-trigger-action={@trigger_submit}
+            action={~p"/lectures/new?_action=created&lecture_id=#{@lecture_id}"}
+            method="post"
+        >
+            <.error :if={@check_errors}>
+                Oops, something went wrong! Please check the errors below.
+            </.error>
+
+            <.input field={@form[:name]} label="Name" required />
+            <.input field={@form[:content]} label="Content" type="textarea" required />
+
+            <:actions>
+                <.button phx-disable-with="Saving..." class="w-full">Save</.button>
+            </:actions>
+        </.simple_form>
+    <% end %> 
 </div>
