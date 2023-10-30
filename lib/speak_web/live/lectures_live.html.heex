@@ -1,0 +1,10 @@
+<div class="flex flex-col gap-y-6">
+    <h1>My Lectures</h1>
+
+
+    <%= if is_nil(@lectures) do%>
+        <p>You don't have any lectures yet. Let's start by creating one.</p>
+    <% else %>
+         <strong>Here are your lectures:</strong>
+    <% end %>
+</div>

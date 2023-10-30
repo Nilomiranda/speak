@@ -64,9 +64,11 @@ defmodule SpeakWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{SpeakWeb.UserAuth, :ensure_authenticated}] do
-      live "/", HomeLive, :show
-      live "/users/settings", UserSettingsLive, :edit
-      live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+        live "/users/settings", UserSettingsLive, :edit
+        live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+
+        live "/", HomeLive, :show
+        live "/lectures", LecturesLive, :index
     end
   end
 
