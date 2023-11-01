@@ -21,6 +21,12 @@ defmodule Speak.Lectures do
     |> Repo.insert()
   end
 
+  def delete_by_id(id) do
+    lecture_to_delete = Repo.get_by(Lecture, id: id);
+
+    lecture_to_delete |> Repo.delete()
+  end
+
   def change_lecture_creation(%Lecture{} = lecture, attrs \\ %{}) do
     Lecture.changeset(lecture, attrs)
   end

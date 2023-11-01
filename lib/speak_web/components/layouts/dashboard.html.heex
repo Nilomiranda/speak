@@ -1,4 +1,7 @@
 <main class="flex border-2 border-blue-500 h-screen">
+  <div class="mx-auto max-w-2xl">
+    <.flash_group flash={@flash} />
+  </div>
   <nav class="border-2 border-red-500 w-full max-w-[250px] flex flex-col py-4 px-2">
     <strong>Hi <%= @current_user.name %></strong>
     <small><%= @current_user.email %></small>

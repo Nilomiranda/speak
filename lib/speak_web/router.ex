@@ -73,6 +73,7 @@ defmodule SpeakWeb.Router do
         live "/lectures/:id", LecturesLive, :show
 
         post "/lectures/new", LectureController, :create
+        delete "/lectures/:id", LectureController, :delete
     end
   end
 
