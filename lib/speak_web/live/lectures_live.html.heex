@@ -9,7 +9,7 @@
     <% end %>
 
     <%= if @live_action === :index do %>
-        <%= if is_nil(@lectures) do%>
+        <%= if is_nil(@lectures) or (is_list(@lectures) and length(@lectures) === 0) do%>
             <p>You don't have any lectures yet. <.link navigate={~p"/lectures/new"} class="text-brand hover:underline">Let's start by creating one.</.link></p>
         <% else %>
             <!-- todo: extract this listing to a component -->
