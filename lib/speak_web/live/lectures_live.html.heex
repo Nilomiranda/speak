@@ -12,6 +12,7 @@
         <%= if is_nil(@lectures) do%>
             <p>You don't have any lectures yet. <.link navigate={~p"/lectures/new"} class="text-brand hover:underline">Let's start by creating one.</.link></p>
         <% else %>
+            <!-- todo: extract this listing to a component -->
             <ul>
                 <%= for lecture <- @lectures do %>
                     <li>
@@ -23,32 +24,17 @@
     <% end %>
 
     <%= if @live_action === :new do %>
-        <h2>Creating a lecture</h2>
-
-        <.simple_form 
-            for={@form}
-            id="create_lecture_form"
-            phx-submit="save"
-            phx-trigger-action={@trigger_submit}
-            action={~p"/lectures/new?_action=created&lecture_id=#{@lecture_id}"}
-            method="post"
-        >
-            <.error :if={@check_errors}>
-                Oops, something went wrong! Please check the errors below.
-            </.error>
-
-            <.input field={@form[:name]} label="Name" required />
-            <.input field={@form[:content]} label="Content" type="textarea" required />
-
-            <:actions>
-                <.button phx-disable-with="Saving..." class="w-full">Save</.button>
-            </:actions>
-        </.simple_form>
+        <.live_component 
+            module={LectureForm} 
+            form={@form}
+            trigger_submit={@trigger_submit}
+            lecture_id={@lecture_id}
+            check_errors={@check_errors}
+            id="lecture_form_page" 
+        />
     <% end %>
 
     <%= if @live_action === :show do %>
-        <%!-- <h1>Viewing a lecture</h1> --%>
-
         <.live_component module={LectureView} lecture={@lecture} id="lecture_view_page" />
     <% end %>
 </div>
