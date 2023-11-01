@@ -38,8 +38,7 @@ defmodule SpeakWeb.LecturesLive do
 
   defp fetch_lectures(socket) do
     fetched_lectures = Lectures.get_by_user_id(socket.assigns.current_user.id)
-    IO.inspect("fetched_lectures")
-    IO.inspect(fetched_lectures)
+
     fetched_lectures
   end
 
