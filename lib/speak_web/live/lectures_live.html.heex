@@ -18,7 +18,7 @@
                     <li class="flex items-center mb-6">
                         <.link href={"/lectures/#{lecture.id}"} class="text-brand"><%= lecture.name %></.link>
 
-                        <.simple_form method="delete" action={~p"/lectures/#{lecture.id}"} for={%{:id => lecture.id}}>
+                        <.simple_form class="flex items-center !mt-0" method="delete" action={~p"/lectures/#{lecture.id}"} for={%{:id => lecture.id}}>
                             <:actions>
                                 <.button class="bg-transparent flex items-center px-0 py-0 ml-2 hover:bg-transparent focus:bg-transparent"><span class="material-symbols-outlined text-red-400 hover:text-red-700 focus:text-red-700">delete</span></.button>
                             </:actions>

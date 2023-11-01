@@ -4,7 +4,7 @@ defmodule LectureForm do
   def render(assigns) do
     ~H"""
       <div>
-        <h2>New lecture</h2>
+        <h2 class="mb-10">New lecture</h2>
 
         <.simple_form
             for={@form}
