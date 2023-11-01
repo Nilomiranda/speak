@@ -6,6 +6,8 @@ defmodule LectureView do
       <div>
         <h2><%= @lecture.name %></h2>
 
+        <p><%= @lecture.description %></p>
+
         <p><%= @lecture.content %></p>
       </div>
     """

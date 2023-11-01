@@ -19,6 +19,7 @@ defmodule LectureForm do
             </.error>
 
             <.input field={@form[:name]} label="Name" required />
+            <.input field={@form[:description]} label="Description" />
             <.input field={@form[:content]} label="Content" type="textarea" required />
 
             <:actions>

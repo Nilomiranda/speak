@@ -5,6 +5,7 @@ defmodule Speak.Lecture do
   schema "lectures" do
     field :name, :string
     field :content, :string
+    field :description, :string
     field :user_id, :id
 
     timestamps()
@@ -13,7 +14,7 @@ defmodule Speak.Lecture do
   @doc false
   def changeset(lecture, attrs) do
     lecture
-    |> cast(attrs, [:name, :content, :user_id])
+    |> cast(attrs, [:name, :content, :user_id, :description])
     |> validate_required([:name, :content, :user_id])
   end
 end

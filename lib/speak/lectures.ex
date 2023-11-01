@@ -13,8 +13,8 @@ defmodule Speak.Lectures do
   end
 
   def save_lecture(attrs, user_id) do
-    %{"name" => name, "content" => content} = attrs
-    mapped_attributes = %{ :name => name, :content => content, :user_id => user_id }
+    %{"name" => name, "content" => content, "description" => description} = attrs
+    mapped_attributes = %{ :name => name, :content => content, :user_id => user_id, :description => description }
 
     %Lecture{}
     |> Lecture.changeset(mapped_attributes)
