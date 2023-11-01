@@ -1,19 +1,21 @@
 <div class="flex flex-col gap-y-6">
-    <h1>My Lectures</h1>
+    <.link href={~p"/lectures"}><h1>My Lectures</h1></.link>
 
 
-    <%= if is_nil(@lectures) do%>
-        <p>You don't have any lectures yet. <.link navigate={~p"/lectures/new"} class="text-brand hover:underline">Let's start by creating one.</.link></p>
-    <% else %>
-         <strong>Here are your lectures:</strong>
+    <%= if @live_action === :index do %>
+        <%= if is_nil(@lectures) do%>
+            <p>You don't have any lectures yet. <.link navigate={~p"/lectures/new"} class="text-brand hover:underline">Let's start by creating one.</.link></p>
+        <% else %>
+            <strong>Here are your lectures:</strong>
 
-         <ul>
-            <%= for lecture <- @lectures do %>
-                <li>
-                    <.link href={"/lectures/#{lecture.id}"} class="text-brand"><%= lecture.name %></.link>
-                </li>
-            <% end %>
-         </ul>
+            <ul>
+                <%= for lecture <- @lectures do %>
+                    <li>
+                        <.link href={"/lectures/#{lecture.id}"} class="text-brand"><%= lecture.name %></.link>
+                    </li>
+                <% end %>
+            </ul>
+        <% end %>
     <% end %>
 
     <%= if @live_action === :new do %>
@@ -38,5 +40,11 @@
                 <.button phx-disable-with="Saving..." class="w-full">Save</.button>
             </:actions>
         </.simple_form>
-    <% end %> 
+    <% end %>
+
+    <%= if @live_action === :show do %>
+        <%!-- <h1>Viewing a lecture</h1> --%>
+
+        <.live_component module={LectureView} lecture={@lecture} id="lecture_view_page" />
+    <% end %>
 </div>

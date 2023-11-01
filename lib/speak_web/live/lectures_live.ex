@@ -4,6 +4,15 @@ defmodule SpeakWeb.LecturesLive do
   alias Speak.Lectures
   alias Speak.Lecture
 
+  def mount(%{"id" => id}, _session, %{:assigns => %{:live_action => :show}} = socket) do
+    {
+      :ok,
+      socket
+        |> assign(:lecture, fetch_lecture(id)),
+        layout: {SpeakWeb.Layouts, :dashboard}
+    }
+  end
+
   def mount(_params, _session, socket) do
     changeset = Lectures.change_lecture_creation(%Lecture{})
 
@@ -31,6 +40,12 @@ defmodule SpeakWeb.LecturesLive do
     fetched_lectures = Lectures.get_by_user_id(socket.assigns.current_user.id)
 
     fetched_lectures
+  end
+
+  defp fetch_lecture(lecture_id) do
+    fetched_lecture = Lectures.get_by_id(lecture_id)
+
+    fetched_lecture
   end
 
   def handle_event("save", %{"lecture" => lecture_params}, socket) do
