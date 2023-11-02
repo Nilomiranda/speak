@@ -3,7 +3,7 @@ defmodule LectureForm do
 
   def render(assigns) do
     ~H"""
-      <div>
+      <div class="h-full">
         <h2 class="mb-10">New lecture</h2>
 
         <.simple_form
@@ -18,9 +18,11 @@ defmodule LectureForm do
                 Oops, something went wrong! Please check the errors below.
             </.error>
 
-            <.input field={@form[:name]} label="Name" required />
-            <.input field={@form[:description]} label="Description" />
-            <.input field={@form[:content]} label="Content" type="textarea" required />
+            <div class="flex items-center gap-x-4 w-full">
+              <.input field={@form[:name]} label="Name" required wrapper_class="flex-1" />
+              <.input field={@form[:description]} label="Description" wrapper_class="flex-1" />
+            </div>
+            <.input field={@form[:content]} label="Content" type="textarea" required class="h-[400px]" />
 
             <:actions>
                 <.button phx-disable-with="Saving..." class="w-full">Save</.button>
