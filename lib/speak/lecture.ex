@@ -7,6 +7,8 @@ defmodule Speak.Lecture do
     field :content, :string
     field :description, :string
     field :user_id, :id
+    field :summary, :string
+    field :summary_status, Ecto.Enum, values: [:processing, :processed, :error], default: :processing
 
     timestamps()
   end

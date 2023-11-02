@@ -11,7 +11,9 @@ defmodule Speak.OpenAI.OpenAI do
     messages = [
       %{
         "role" => "user",
-        "content" => "You are a university teacher, and given the following text #{content_to_query_about}, follow these instructions that start with '{INSTRUCTION}' and ends when the next '{INSTRUCTION}' comes: #{instruction_list}."
+        "content" => "
+          You are a university teacher, and given the following text #{content_to_query_about}, follow these instructions that start with '{INSTRUCTION}' and ends when the next '{INSTRUCTION}' comes: #{instruction_list}.
+        "
       }
     ]
 
