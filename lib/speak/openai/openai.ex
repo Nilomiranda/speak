@@ -3,8 +3,6 @@ defmodule Speak.OpenAI.OpenAI do
 
   alias Speak.Utils
 
-  import Poison
-
   def send_gtp_request(query, content_to_query_about) do
     open_ai_base_completions_url = "https://api.openai.com/v1/chat/completions"
     open_ai_token = System.get_env "OPEN_AI_API_KEY"
