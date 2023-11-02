@@ -41,6 +41,6 @@
     <% end %>
 
     <%= if @live_action === :show do %>
-        <.live_component module={LectureView} lecture={@lecture} id="lecture_view_page" />
+        <.live_component module={LectureView} summary_response={@summary_response} lecture={@lecture} id="lecture_view_page" />
     <% end %>
 </div>

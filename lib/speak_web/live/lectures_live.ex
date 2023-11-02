@@ -1,5 +1,8 @@
 defmodule SpeakWeb.LecturesLive do
+  alias Speak.OpenAI.OpenAI
   use SpeakWeb, :live_view
+
+  alias Speak.OpenAI.OpenAI
 
   alias Speak.Lectures
   alias Speak.Lecture
@@ -8,8 +11,9 @@ defmodule SpeakWeb.LecturesLive do
     {
       :ok,
       socket
+        |> assign(:summary_response, "")
         |> assign(:lecture, fetch_lecture(id)),
-        layout: {SpeakWeb.Layouts, :dashboard}
+      layout: {SpeakWeb.Layouts, :dashboard}
     }
   end
 
@@ -56,6 +60,24 @@ defmodule SpeakWeb.LecturesLive do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, socket |> assign(check_errors: true) |> assign_form(changeset)}
+    end
+  end
+
+  def handle_event("generate-summary", %{"content" => lecture_content}, socket) do
+    # TODO: change this to dynamic values once user can create prompts
+    default_prompts = [
+      "What is this text about?",
+      "What are other topics that could further extend what is discussed in this text",
+      "Are there citations to scientific articles? If so, outline these articles in comma separated values"
+    ]
+
+    case OpenAI.send_gtp_request(default_prompts, lecture_content) do
+      {:ok, response} ->
+        {:noreply, socket |> assign(:summary_response, response)}
+      {:error, error} ->
+        {:noreply, socket |> put_flash(:error, error)}
+      {:unexpected_error, unexpected_error} ->
+        {:noreply, socket |> put_flash(:error, unexpected_error)}
     end
   end
 end

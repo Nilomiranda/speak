@@ -17,9 +17,15 @@ defmodule LectureView do
           </.simple_form>
         </div>
 
-        <div class="flex items-stretch gap-x-2 mt-1">
+        <div class="flex items-stretch gap-x-2 mt-1 ">
           <div class="border-2 border-green-900 flex-1 p-1">
             <h3 class="text-brand text-xl">Content summary</h3>
+
+            <%= if @summary_response do %>
+              <p><%= @summary_response %></p>
+            <% end %>
+
+            <.button phx-click="generate-summary" phx-value-content={@lecture.content}>Generate summary</.button>
           </div>
 
           <div class="border-2 border-pink-500 flex-1 p-1">
