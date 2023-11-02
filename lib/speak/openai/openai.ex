@@ -1,5 +1,8 @@
 defmodule Speak.OpenAI.OpenAI do
   use HTTPoison.Base
+
+  alias Speak.Utils
+
   import Poison
 
   def send_gtp_request(query, content_to_query_about) do
@@ -24,7 +27,7 @@ defmodule Speak.OpenAI.OpenAI do
       "Authorization" => "Bearer #{open_ai_token}"
     }
 
-    {:ok, encoded_body} = encode(body)
+    encoded_body = Utils.encode_json(body)
 
     case HTTPoison.request(:post, open_ai_base_completions_url, encoded_body, headers, [recv_timeout: 600000]) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
@@ -32,7 +35,8 @@ defmodule Speak.OpenAI.OpenAI do
         IO.puts "response body"
         IO.puts body
 
-        {:ok, decoded_body} = decode(body)
+        decoded_body = Utils.decode_json(body)
+
         %{"choices" => choices} = decoded_body
         %{"message" => %{"content" => content}} = hd choices
 
