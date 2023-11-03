@@ -1,13 +1,21 @@
 defmodule Speak.OpenAI.OpenAI do
-  use HTTPoison.Base
+  import HTTPoison
+  alias HTTPoison
 
   alias Speak.Utils
 
-  def send_gtp_request(query, content_to_query_about) do
+  def send_gtp_request(content_to_query_about, lecture_id) do
+    IO.inspect "Handling summary generation for lecture id #{lecture_id}"
     open_ai_base_completions_url = "https://api.openai.com/v1/chat/completions"
     open_ai_token = System.get_env "OPEN_AI_API_KEY"
 
-    instruction_list = Enum.join(query, "{INSTRUCTION}")
+    default_prompts = [
+      "What is this text about?",
+      "What are other topics that could further extend what is discussed in this text",
+      "Are there citations to scientific articles? If so, outline these articles in comma separated values"
+    ]
+
+    instruction_list = Enum.join(default_prompts, "{INSTRUCTION}")
     messages = [
       %{
         "role" => "user",
@@ -29,12 +37,10 @@ defmodule Speak.OpenAI.OpenAI do
 
     encoded_body = Utils.encode_json(body)
 
-    case HTTPoison.request(:post, open_ai_base_completions_url, encoded_body, headers, [recv_timeout: 600000]) do
+    IO.inspect "About to send request to Open AI..."
+    case request(:post, open_ai_base_completions_url, encoded_body, headers, [recv_timeout: 600000]) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         # TODO: improve error handling
-        IO.puts "response body"
-        IO.puts body
-
         decoded_body = Utils.decode_json(body)
 
         %{"choices" => choices} = decoded_body
@@ -42,9 +48,11 @@ defmodule Speak.OpenAI.OpenAI do
 
         {:ok, content}
       {:ok, %HTTPoison.Response{status_code: 404}} ->
-        {:error, "Not fount"}
+        {:error, "Not found"}
       {:ok, %HTTPoison.Response{status_code: 429}} ->
         {:error, "Not enough credits"}
+      {:ok, %HTTPoison.Response{status_code: status_code}} ->
+        {:unexpected_error, "Received status #{status_code}"}
       {:error, %HTTPoison.Error{reason: reason}} ->
         {:unexpected_error, reason}
     end

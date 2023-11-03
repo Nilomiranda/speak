@@ -3,6 +3,7 @@ defmodule Speak.Lectures do
 
   alias Speak.Repo
   alias Speak.Lecture
+  alias Speak.OpenAI.OpenAI
 
   def get_by_user_id(user_id) when is_integer(user_id) do
     Repo.all(Lecture, user_id: user_id)
@@ -19,6 +20,32 @@ defmodule Speak.Lectures do
     %Lecture{}
     |> Lecture.changeset(mapped_attributes)
     |> Repo.insert()
+  end
+
+  defp save_summary_to_lecture(id, summary) when is_binary(summary) do
+    IO.inspect "Generated summary for lecture id #{id}"
+
+    lecture = Repo.get!(Lecture, id)
+    IO.inspect "Lecture before summary"
+    IO.inspect lecture
+    lecture = Lecture.changeset(lecture, %{:summary_status => :processed, :summary => summary})
+    IO.inspect "Lecture after summary before final update..."
+    IO.inspect lecture
+
+    lecture |> Repo.update
+  end
+
+  def process_summary(lecture_content, lecture_id) when is_binary(lecture_content) do
+    case OpenAI.send_gtp_request(lecture_content, lecture_id) do
+      {:ok, generated_summary} ->
+        save_summary_to_lecture(lecture_id, generated_summary)
+      {:error, error} ->
+        IO.puts "Error processing summary for lecture id #{lecture_id}"
+        IO.puts error
+      {:unexpected_error, exception} ->
+        IO.puts "Unexpected error processing summary for lecture id #{lecture_id}"
+        IO.puts exception
+    end
   end
 
   def delete_by_id(id) do

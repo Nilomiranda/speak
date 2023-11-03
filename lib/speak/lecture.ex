@@ -16,7 +16,7 @@ defmodule Speak.Lecture do
   @doc false
   def changeset(lecture, attrs) do
     lecture
-    |> cast(attrs, [:name, :content, :user_id, :description])
+    |> cast(attrs, [:name, :content, :user_id, :description, :summary, :summary_status])
     |> validate_required([:name, :content, :user_id])
   end
 end
