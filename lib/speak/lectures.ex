@@ -1,12 +1,14 @@
 defmodule Speak.Lectures do
   import Phoenix.Controller
+  import Ecto.Query, only: [from: 2]
 
   alias Speak.Repo
   alias Speak.Lecture
   alias Speak.OpenAI.OpenAI
 
   def get_by_user_id(user_id) when is_integer(user_id) do
-    Repo.all(Lecture, user_id: user_id)
+    query = from lecture in Lecture, where: lecture.user_id == ^user_id
+    Repo.all(query)
   end
 
   def get_by_id(id) do
