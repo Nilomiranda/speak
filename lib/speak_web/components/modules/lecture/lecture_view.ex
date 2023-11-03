@@ -18,7 +18,7 @@ defmodule LectureView do
         </div>
 
         <div class="flex items-stretch gap-x-2 mt-1 ">
-          <div class="border-2 border-green-900 flex-1 p-1">
+          <div class="flex-1 p-1">
             <h3 class="text-brand text-xl mb-4">Content summary</h3>
 
             <%= case @lecture.summary_status do %>
@@ -28,7 +28,7 @@ defmodule LectureView do
                   <p>Processing summary, please refresh the page to check again</p>
                 </div>
               <% :processed -> %>
-                <p><%= @lecture.summary %></p>
+                <p><%= raw @lecture.summary |> String.replace("\n", "<br />") %></p>
               <% :error -> %>
                 <p>Error processing summary.</p>
 
@@ -37,8 +37,8 @@ defmodule LectureView do
             <% end %>
           </div>
 
-          <div class="border-2 border-pink-500 flex-1 p-1">
-            <p><%= @lecture.content %></p>
+          <div class="flex-1 p-1">
+            <p><%= raw @lecture.content |> String.replace("\n", "<br />") %></p>
           </div>
 
         </div>
