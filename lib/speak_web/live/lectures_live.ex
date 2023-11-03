@@ -4,7 +4,17 @@ defmodule SpeakWeb.LecturesLive do
   alias Speak.Lectures
   alias Speak.Lecture
 
+  @poll_interval 5_000
+
+  defp schedule_poll(lecture_id) do
+    Process.send_after(self(), {:poll, lecture_id}, @poll_interval)
+  end
+
   def mount(%{"id" => id}, _session, %{:assigns => %{:live_action => :show}} = socket) do
+    if connected?(socket) do
+      schedule_poll(id)
+    end
+
     {
       :ok,
       socket
@@ -58,6 +68,16 @@ defmodule SpeakWeb.LecturesLive do
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, socket |> assign(check_errors: true) |> assign_form(changeset)}
     end
+  end
+
+  def handle_info({:poll, lecture_id}, socket) do
+    lecture_with_summary = fetch_lecture(lecture_id)
+
+    if lecture_with_summary.summary_status === :processing do
+      schedule_poll(lecture_id)
+    end
+
+    {:noreply, socket |> assign(:lecture, lecture_with_summary)}
   end
 
   # def handle_event("generate-summary", %{"content" => lecture_content}, socket) do

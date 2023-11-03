@@ -19,11 +19,14 @@ defmodule LectureView do
 
         <div class="flex items-stretch gap-x-2 mt-1 ">
           <div class="border-2 border-green-900 flex-1 p-1">
-            <h3 class="text-brand text-xl">Content summary</h3>
+            <h3 class="text-brand text-xl mb-4">Content summary</h3>
 
             <%= case @lecture.summary_status do %>
               <% :processing -> %>
-                <p>Processing summary, please refresh the page to check again</p>
+                <div class="flex items-center gap-x-4">
+                  <span class="material-symbols-outlined animate-spin">sync</span>
+                  <p>Processing summary, please refresh the page to check again</p>
+                </div>
               <% :processed -> %>
                 <p><%= @lecture.summary %></p>
               <% :error -> %>
@@ -32,8 +35,6 @@ defmodule LectureView do
                 <!-- TODO: implement logic to reprocess summary -->
                 <%!-- <.button phx-click="generate-summary" phx-value-content={@lecture.content}>Generate summary</.button> --%>
             <% end %>
-
-            <%!-- <.button phx-click="generate-summary" phx-value-content={@lecture.content}>Generate summary</.button> --%>
           </div>
 
           <div class="border-2 border-pink-500 flex-1 p-1">
