@@ -22,15 +22,18 @@ defmodule Speak.Lectures do
     |> Repo.insert()
   end
 
+  defp save_summary_to_lecture(id, nil) do
+    lecture = Repo.get!(Lecture, id)
+    lecture = Lecture.changeset(lecture, %{:summary_status => :error})
+
+    lecture |> Repo.update
+  end
+
   defp save_summary_to_lecture(id, summary) when is_binary(summary) do
     IO.inspect "Generated summary for lecture id #{id}"
 
     lecture = Repo.get!(Lecture, id)
-    IO.inspect "Lecture before summary"
-    IO.inspect lecture
     lecture = Lecture.changeset(lecture, %{:summary_status => :processed, :summary => summary})
-    IO.inspect "Lecture after summary before final update..."
-    IO.inspect lecture
 
     lecture |> Repo.update
   end
@@ -42,9 +45,11 @@ defmodule Speak.Lectures do
       {:error, error} ->
         IO.puts "Error processing summary for lecture id #{lecture_id}"
         IO.puts error
+        save_summary_to_lecture(lecture_id, nil)
       {:unexpected_error, exception} ->
         IO.puts "Unexpected error processing summary for lecture id #{lecture_id}"
         IO.puts exception
+        save_summary_to_lecture(lecture_id, nil)
     end
   end
 
