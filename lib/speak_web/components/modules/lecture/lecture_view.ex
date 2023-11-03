@@ -39,8 +39,12 @@ defmodule LectureView do
             </div>
           </div>
 
-          <div class="flex-1 p-1">
-            <p><%= raw @lecture.content |> String.replace("\n", "<br />") %></p>
+          <div class="flex-1 border border-gray-300">
+            <h3 class="text-gray-600 text-xl mb-4 p-2 bg-gray-100">Transcript</h3>
+
+            <div class="p-2">
+              <p><%= raw @lecture.content |> String.replace("\n", "<br />") %></p>
+            </div>
           </div>
 
         </div>
