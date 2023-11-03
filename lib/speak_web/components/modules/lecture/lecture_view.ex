@@ -17,24 +17,26 @@ defmodule LectureView do
           </.simple_form>
         </div>
 
-        <div class="flex items-stretch gap-x-2 mt-1 ">
-          <div class="flex-1 p-1">
-            <h3 class="text-brand text-xl mb-4">Content summary</h3>
+        <div class="flex items-stretch gap-x-2 mt-1">
+          <div class="flex-1 border border-gray-300">
+            <h3 class="text-gray-600 text-xl mb-4 p-2 bg-gray-100">Content summary</h3>
 
-            <%= case @lecture.summary_status do %>
-              <% :processing -> %>
-                <div class="flex items-center gap-x-4">
-                  <span class="material-symbols-outlined animate-spin">sync</span>
-                  <p>Processing summary, please refresh the page to check again</p>
-                </div>
-              <% :processed -> %>
-                <p><%= raw @lecture.summary |> String.replace("\n", "<br />") %></p>
-              <% :error -> %>
-                <p>Error processing summary.</p>
+            <div class="p-2">
+              <%= case @lecture.summary_status do %>
+                <% :processing -> %>
+                  <div class="flex items-center gap-x-4">
+                    <span class="material-symbols-outlined animate-spin">sync</span>
+                    <p>Processing summary, please refresh the page to check again</p>
+                  </div>
+                <% :processed -> %>
+                  <p><%= raw @lecture.summary |> String.replace("\n", "<br />") %></p>
+                <% :error -> %>
+                  <p>Error processing summary.</p>
 
-                <!-- TODO: implement logic to reprocess summary -->
-                <%!-- <.button phx-click="generate-summary" phx-value-content={@lecture.content}>Generate summary</.button> --%>
-            <% end %>
+                  <!-- TODO: implement logic to reprocess summary -->
+                  <%!-- <.button phx-click="generate-summary" phx-value-content={@lecture.content}>Generate summary</.button> --%>
+              <% end %>
+            </div>
           </div>
 
           <div class="flex-1 p-1">
