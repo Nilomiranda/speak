@@ -4,6 +4,7 @@ defmodule Speak.Prompt do
 
   schema "prompts" do
     field :message, :string
+    field :enabled, :boolean, default: true
     field :user_id, :id
 
     timestamps()
@@ -12,7 +13,7 @@ defmodule Speak.Prompt do
   @doc false
   def changeset(prompt, attrs) do
     prompt
-    |> cast(attrs, [:message])
-    |> validate_required([:message])
+    |> cast(attrs, [:message, :enabled, :user_id])
+    |> validate_required([:message, :user_id])
   end
 end

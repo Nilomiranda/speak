@@ -7,6 +7,7 @@ defmodule Speak.Accounts do
   alias Speak.Repo
 
   alias Speak.Accounts.{User, UserToken, UserNotifier}
+  alias Speak.Prompts
 
   ## Database getters
 
@@ -75,9 +76,18 @@ defmodule Speak.Accounts do
 
   """
   def register_user(attrs) do
-    %User{}
-    |> User.registration_changeset(attrs)
-    |> Repo.insert()
+    case %User{}
+        |> User.registration_changeset(attrs)
+        |> Repo.insert() do
+      {:ok, created_user} ->
+        Prompts.add_defaults_to_user_id(created_user.id)
+
+        {:ok, created_user}
+      {:error, changeset} ->
+        IO.inspect "Could not set default prompts because of an error during user creation"
+
+        {:error, changeset}
+    end
   end
 
   @doc """
