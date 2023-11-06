@@ -12,6 +12,14 @@ defmodule PromptsIndex do
           <%= if length(@prompts) === 0 do %>
             <p>You don't have any prompts yet. Let's create a few.</p>
           <% end %>
+
+          <%= for {prompt, index} <- Enum.with_index(@prompts) do %>
+            <div class="flex items-center gap-x-4 mb-6">
+              <p><%= prompt.message %></p>
+
+              <.input type="checkbox" name={"Enabled #{prompt.id}"} value={prompt.id} checked={prompt.enabled} />
+            </div>
+          <% end %>
         </div>
       </div>
     """
