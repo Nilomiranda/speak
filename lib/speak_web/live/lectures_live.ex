@@ -79,22 +79,4 @@ defmodule SpeakWeb.LecturesLive do
 
     {:noreply, socket |> assign(:lecture, lecture_with_summary)}
   end
-
-  # def handle_event("generate-summary", %{"content" => lecture_content}, socket) do
-  #   # TODO: change this to dynamic values once user can create prompts
-  #   default_prompts = [
-  #     "What is this text about?",
-  #     "What are other topics that could further extend what is discussed in this text",
-  #     "Are there citations to scientific articles? If so, outline these articles in comma separated values"
-  #   ]
-
-  #   case OpenAI.send_gtp_request(default_prompts, lecture_content) do
-  #     {:ok, response} ->
-  #       {:noreply, socket |> assign(:summary_response, response)}
-  #     {:error, error} ->
-  #       {:noreply, socket |> put_flash(:error, error)}
-  #     {:unexpected_error, unexpected_error} ->
-  #       {:noreply, socket |> put_flash(:error, unexpected_error)}
-  #   end
-  # end
 end
