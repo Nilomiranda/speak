@@ -4,18 +4,12 @@ defmodule Speak.OpenAI.OpenAI do
 
   alias Speak.Utils
 
-  def send_gtp_request(content_to_query_about, lecture_id) do
+  def send_gtp_request(content_to_query_about, lecture_id, prompts_messages) do
     IO.inspect "Handling summary generation for lecture id #{lecture_id}"
     open_ai_base_completions_url = "https://api.openai.com/v1/chat/completions"
     open_ai_token = System.get_env "OPEN_AI_API_KEY"
 
-    default_prompts = [
-      "What is this text about?",
-      "What are other topics that could further extend what is discussed in this text",
-      "Are there citations to scientific articles? If so, outline these articles in comma separated values"
-    ]
-
-    instruction_list = Enum.join(default_prompts, "{INSTRUCTION}")
+    instruction_list = Enum.join(prompts_messages, "{INSTRUCTION}")
     messages = [
       %{
         "role" => "user",

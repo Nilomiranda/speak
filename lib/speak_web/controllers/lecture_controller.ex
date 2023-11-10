@@ -23,7 +23,7 @@ defmodule SpeakWeb.LectureController do
 
   defp create(conn, %{"lecture_id" => lecture_id}, info) do
     if lecture = Lectures.get_by_id(lecture_id) do
-      Task.start(fn -> Lectures.process_summary(lecture.content, lecture.id) end)
+      Task.start(fn -> Lectures.process_summary(lecture.content, lecture.id, conn.assigns.current_user.id) end)
 
       conn
         |> put_flash(:info, info)

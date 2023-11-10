@@ -5,6 +5,7 @@ defmodule Speak.Lectures do
   alias Speak.Repo
   alias Speak.Lecture
   alias Speak.OpenAI.OpenAI
+  alias Speak.Prompts
 
   def get_by_user_id(user_id) when is_integer(user_id) do
     query = from lecture in Lecture, where: lecture.user_id == ^user_id
@@ -40,18 +41,26 @@ defmodule Speak.Lectures do
     lecture |> Repo.update
   end
 
-  def process_summary(lecture_content, lecture_id) when is_binary(lecture_content) do
-    case OpenAI.send_gtp_request(lecture_content, lecture_id) do
-      {:ok, generated_summary} ->
-        save_summary_to_lecture(lecture_id, generated_summary)
-      {:error, error} ->
-        IO.puts "Error processing summary for lecture id #{lecture_id}"
-        IO.puts error
-        save_summary_to_lecture(lecture_id, nil)
-      {:unexpected_error, exception} ->
-        IO.puts "Unexpected error processing summary for lecture id #{lecture_id}"
-        IO.puts exception
-        save_summary_to_lecture(lecture_id, nil)
+  def process_summary(lecture_content, lecture_id, user_id) when is_binary(lecture_content) do
+    prompts = Prompts.get_enabled_and_by_user_id(user_id)
+
+    ## TODO: improve this control flow if user doesn't have any enabled prompt
+
+    unless length(prompts) == 0 do
+      prompts_messages = Enum.map(prompts, fn prompt -> prompt.message end)
+
+      case OpenAI.send_gtp_request(lecture_content, lecture_id, prompts_messages) do
+        {:ok, generated_summary} ->
+          save_summary_to_lecture(lecture_id, generated_summary)
+        {:error, error} ->
+          IO.puts "Error processing summary for lecture id #{lecture_id}"
+          IO.puts error
+          save_summary_to_lecture(lecture_id, nil)
+        {:unexpected_error, exception} ->
+          IO.puts "Unexpected error processing summary for lecture id #{lecture_id}"
+          IO.puts exception
+          save_summary_to_lecture(lecture_id, nil)
+      end
     end
   end
 

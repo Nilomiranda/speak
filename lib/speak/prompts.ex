@@ -10,6 +10,14 @@ defmodule Speak.Prompts do
     Repo.all(query)
   end
 
+  def get_enabled_and_by_user_id(user_id) do
+    query = from prompt in Prompt, where: prompt.user_id == ^user_id and prompt.enabled == true
+    prompts = Repo.all(query)
+    IO.inspect("prompts")
+    IO.inspect(prompts)
+    prompts
+  end
+
   def add_defaults_to_user_id(user_id) do
     system_default_prompts = [
       "What is this text about?",
