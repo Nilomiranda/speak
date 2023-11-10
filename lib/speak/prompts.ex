@@ -25,4 +25,21 @@ defmodule Speak.Prompts do
 
     Repo.insert_all(Prompt, default_prompts_changeset)
   end
+
+  def change_prompt_creation(%Prompt{} = prompt, attrs \\ %{}) do
+    Prompt.changeset(prompt, attrs)
+  end
+
+  def save_prompt(attrs, user_id) do
+    %{"message" => message} = attrs
+    mapped_attributes = %{:message => message, :user_id => user_id}
+
+    %Prompt{}
+    |> Prompt.changeset(mapped_attributes)
+    |> Repo.insert()
+  end
+
+  def get_by_id(prompt_id) do
+    Prompt |> Repo.get_by(id: prompt_id)
+  end
 end

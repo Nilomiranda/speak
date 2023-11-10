@@ -1,6 +1,16 @@
 <div>
+    <.link href={~p"/prompts"}><h1>Prompts</h1></.link>
     <%= case @live_action do%>
         <% :index -> %>
-            <.live_component module={PromptsIndex} id="prompts-index" prompts={@prompts} />
+            <.live_component module={PromptsIndex} id="prompts-index-component" prompts={@prompts} />
+        <% :new -> %>
+            <.live_component 
+                module={PromptForm} 
+                id="prompt-form-component" 
+                form={@form} 
+                trigger_submit={@trigger_submit} 
+                prompt_id={@prompt_id} 
+                check_errors={@check_errors} 
+            />
     <% end %>
 </div>

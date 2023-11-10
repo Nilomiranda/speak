@@ -76,6 +76,8 @@ defmodule SpeakWeb.Router do
 
 
         live "/prompts", PromptsLive, :index
+        live "/prompts/new", PromptsLive, :new
+        post "/prompts/new", PromptController, :create
     end
   end
 

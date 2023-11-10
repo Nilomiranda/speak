@@ -15,5 +15,6 @@ defmodule Speak.Prompt do
     prompt
     |> cast(attrs, [:message, :enabled, :user_id])
     |> validate_required([:message, :user_id])
+    |> validate_length(:message, max: 200)
   end
 end
