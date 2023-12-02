@@ -41,4 +41,11 @@ defmodule SpeakWeb.PromptsLive do
         {:noreply, socket |> assign(check_errors: true) |> assign_form(changeset)}
     end
   end
+
+  def handle_event("prompt_toggled", params, socket) do
+    IO.inspect "params"
+    IO.inspect params
+
+    {:noreply, socket}
+  end
 end
