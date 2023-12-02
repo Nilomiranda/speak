@@ -4,6 +4,7 @@ defmodule Speak.Repo.Migrations.CreatePrompts do
   def change do
     create table(:prompts) do
       add :message, :string
+      add :enabled, :boolean, default: true
       add :user_id, references(:users, on_delete: :nothing)
 
       timestamps()
