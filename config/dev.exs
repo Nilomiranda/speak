@@ -2,13 +2,27 @@ import Config
 
 # Configure your database
 config :speak, Speak.Repo,
-  username: "admin",
-  password: "admin",
-  hostname: "localhost",
-  database: "speak_dev",
+  # local development
+
+  # username: "admin",
+  # password: "admin",
+  # hostname: "localhost",
+  # database: "speak_dev",
+  # stacktrace: true,
+  # show_sensitive_data_on_connection_error: true,
+  # pool_size: 10
+
+  # ==== AWS INSTANCE ====
+  username: System.get_env("AWS_DB_USER"),
+  password: System.get_env("AWS_DB_PASSWORD"),
+  hostname: System.get_env("AWS_DB_HOST"),
+  port: System.get_env("AWS_DB_PORT"),
+  database: System.get_env("AWS_DB_NAME"),
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  pool_size: 10,
+  ssl: true,
+  ssl_opts: [verify: :verify_none]
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -19,7 +33,14 @@ config :speak, Speak.Repo,
 config :speak, SpeakWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {127, 0, 0, 1}, port: 4000],
+  # http: [ip: {127, 0, 0, 1}, port: 4000],
+  http: [port: 4000],
+  https: [
+    port: 4001,
+    cipher_suite: :strong,
+    certfile: "priv/cert/selfsigned.pem",
+    keyfile: "priv/cert/selfsigned_key.pem"
+  ],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
