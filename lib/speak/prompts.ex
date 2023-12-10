@@ -61,4 +61,10 @@ defmodule Speak.Prompts do
   def get_by_id(prompt_id) do
     Prompt |> Repo.get_by(id: prompt_id)
   end
+
+  def delete_by_id(id) do
+    prompt_to_delete = Repo.get_by(Prompt, id: id);
+
+    prompt_to_delete |> Repo.delete()
+  end
 end

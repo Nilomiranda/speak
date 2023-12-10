@@ -31,6 +31,16 @@ defmodule PromptsIndex do
                 checked={prompt.enabled}
                 phx-click="prompt_toggled"
               />
+
+              <.simple_form class="flex items-center !mt-0" method="delete" action={~p"/prompts/#{prompt.id}"} for={%{"id" => prompt.id}}>
+                <:actions>
+                    <.button
+                      class="bg-transparent flex items-center px-0 py-0 hover:bg-transparent focus:bg-transparent"
+                    >
+                      <span class="material-symbols-outlined text-red-400 hover:text-red-700 focus:text-red-700">delete</span>
+                    </.button>
+                </:actions>
+              </.simple_form>
             </div>
           <% end %>
         </div>
