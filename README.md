@@ -3,7 +3,8 @@
 ## Setting up project
 
 - Run `mix setup` to install and setup dependencies
-- Copy contenst of `.env.template` to `.env` and setup the appropriate values
+- Copy content of `.env.template` to `.env` and setup the appropriate values
+- Run `source .env` to update the env vars
 - Run `mix ecto.create` to run the first setup for the database. This will create the project database if it doesn't exist
 - Now run `mix ecto.migrate` to run the migrations to have all tables and entities setup
 - Now you can start your phoenix server as described below.
