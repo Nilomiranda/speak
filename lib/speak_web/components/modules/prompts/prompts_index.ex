@@ -21,7 +21,7 @@ defmodule PromptsIndex do
 
           <%= for prompt <- @prompts do %>
             <div class="flex items-center gap-x-4 mb-6">
-              <p><%= prompt.message %></p>
+              <span contenteditable="true" phx-blur="prompt_blurred" phx-value-id={prompt.message}><%= prompt.message %></span>
 
               <.input
                 type="checkbox"

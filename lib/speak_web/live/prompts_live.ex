@@ -50,4 +50,12 @@ defmodule SpeakWeb.PromptsLive do
         {:noreply, socket |> put_flash(:error, "Couldn't save your preferences. Please try again.")}
     end
   end
+
+  def handle_event("prompt_blurred", %{"id" => prompt_id, "value" => value}, socket) do
+    IO.inspect "params"
+    IO.inspect prompt_id
+    IO.inspect value
+
+    {:noreply, socket}
+  end
 end
