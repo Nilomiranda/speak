@@ -42,10 +42,12 @@ defmodule SpeakWeb.PromptsLive do
     end
   end
 
-  def handle_event("prompt_toggled", params, socket) do
-    IO.inspect "params"
-    IO.inspect params
-
-    {:noreply, socket}
+  def handle_event("prompt_toggled", %{"prompt-id" => prompt_id}, socket) do
+    case Prompts.disable_by_id_and_user_id(prompt_id, socket.assigns.current_user.id) do
+      {:ok} ->
+        {:noreply, socket |> put_flash(:info, "Preferences succesfully saved.")}
+      {:error} ->
+        {:noreply, socket |> put_flash(:error, "Couldn't save your preferences. Please try again.")}
+    end
   end
 end

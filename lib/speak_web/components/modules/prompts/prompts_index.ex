@@ -23,7 +23,14 @@ defmodule PromptsIndex do
             <div class="flex items-center gap-x-4 mb-6">
               <p><%= prompt.message %></p>
 
-              <.input type="checkbox" name={"Enabled #{prompt.id}"} value={prompt.id} checked={prompt.enabled} phx-change="prompt_toggled" id={"prompt-toggle-#{prompt.id}"} />
+              <.input
+                type="checkbox"
+                phx-value-prompt-id={prompt.id}
+                name={"Enabled #{prompt.id}"}
+                value={prompt.id}
+                checked={prompt.enabled}
+                phx-click="prompt_toggled"
+              />
             </div>
           <% end %>
         </div>
