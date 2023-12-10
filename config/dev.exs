@@ -4,6 +4,15 @@ import Config
 config :speak, Speak.Repo,
   # local development
 
+  username: "danilo",
+  password: "danilo",
+  hostname: "localhost",
+  database: "speak_dev",
+  stacktrace: true,
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
+  # ==== DOCKER INSTANCE ====
   # username: "admin",
   # password: "admin",
   # hostname: "localhost",
@@ -13,16 +22,16 @@ config :speak, Speak.Repo,
   # pool_size: 10
 
   # ==== AWS INSTANCE ====
-  username: System.get_env("AWS_DB_USER"),
-  password: System.get_env("AWS_DB_PASSWORD"),
-  hostname: System.get_env("AWS_DB_HOST"),
-  port: System.get_env("AWS_DB_PORT"),
-  database: System.get_env("AWS_DB_NAME"),
-  stacktrace: true,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10,
-  ssl: true,
-  ssl_opts: [verify: :verify_none]
+  # username: System.get_env("AWS_DB_USER"),
+  # password: System.get_env("AWS_DB_PASSWORD"),
+  # hostname: System.get_env("AWS_DB_HOST"),
+  # port: System.get_env("AWS_DB_PORT"),
+  # database: System.get_env("AWS_DB_NAME"),
+  # stacktrace: true,
+  # show_sensitive_data_on_connection_error: true,
+  # pool_size: 10,
+  # ssl: true,
+  # ssl_opts: [verify: :verify_none]
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

@@ -21,9 +21,26 @@ defmodule PromptsIndex do
 
           <%= for prompt <- @prompts do %>
             <div class="flex items-center gap-x-4 mb-6">
-              <p><%= prompt.message %></p>
+              <span contenteditable="true" phx-blur="prompt_blurred" phx-value-id={prompt.message}><%= prompt.message %></span>
 
-              <.input type="checkbox" name={"Enabled #{prompt.id}"} value={prompt.id} checked={prompt.enabled} phx-change="prompt_toggled" id={"prompt-toggle-#{prompt.id}"} />
+              <.input
+                type="checkbox"
+                phx-value-prompt-id={prompt.id}
+                name={"Enabled #{prompt.id}"}
+                value={prompt.id}
+                checked={prompt.enabled}
+                phx-click="prompt_toggled"
+              />
+
+              <.simple_form class="flex items-center !mt-0" method="delete" action={~p"/prompts/#{prompt.id}"} for={%{"id" => prompt.id}}>
+                <:actions>
+                    <.button
+                      class="bg-transparent flex items-center px-0 py-0 hover:bg-transparent focus:bg-transparent"
+                    >
+                      <span class="material-symbols-outlined text-red-400 hover:text-red-700 focus:text-red-700">delete</span>
+                    </.button>
+                </:actions>
+              </.simple_form>
             </div>
           <% end %>
         </div>

@@ -1,6 +1,7 @@
 defmodule Speak.Prompts do
   alias Speak.Prompt
   alias Speak.Repo
+  alias Ecto
 
   import Ecto.Query, only: [from: 2]
 
@@ -13,9 +14,19 @@ defmodule Speak.Prompts do
   def get_enabled_and_by_user_id(user_id) do
     query = from prompt in Prompt, where: prompt.user_id == ^user_id and prompt.enabled == true
     prompts = Repo.all(query)
-    IO.inspect("prompts")
-    IO.inspect(prompts)
     prompts
+  end
+
+  def disable_by_id_and_user_id(prompt_id, user_id) do
+    query = from prompt in Prompt, where: prompt.user_id == ^user_id and prompt.id == ^prompt_id
+    prompt = query |> Repo.one
+
+    updated_prompt = Ecto.Changeset.change prompt, enabled: !prompt.enabled
+
+    case Repo.update updated_prompt do
+      {:ok, _struct} -> {:ok}
+      {:error, _changeset} -> {:error}
+    end
   end
 
   def add_defaults_to_user_id(user_id) do
@@ -49,5 +60,11 @@ defmodule Speak.Prompts do
 
   def get_by_id(prompt_id) do
     Prompt |> Repo.get_by(id: prompt_id)
+  end
+
+  def delete_by_id(id) do
+    prompt_to_delete = Repo.get_by(Prompt, id: id);
+
+    prompt_to_delete |> Repo.delete()
   end
 end
