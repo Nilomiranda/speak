@@ -1,21 +1,21 @@
-defmodule PromptComponents do
+defmodule PromptCard do
   import SpeakWeb.CoreComponents
-  use Phoenix.Component
+  use SpeakWeb, :live_component
 
-  attr :prompt, Speak.Prompt, required: true
-  def prompt_card(assigns) do
+  def render(assigns) do
     ~H"""
       <div>
         <.input
+          phx-click="clicked-prompt-card"
           type="text"
           name={@prompt.id}
           value={@prompt.message}
           class="border-none p-0 sm:text-base"
-          />
+        />
 
           <p
+            phx-clicks="clicked-prompt-card"
             class="text-base"
-            @blur="alert('hi')"
             phx-blur="prompt-blurred"
             phx-value-id={@prompt.message}
             >
