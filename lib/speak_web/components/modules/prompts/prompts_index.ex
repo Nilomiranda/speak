@@ -7,7 +7,7 @@ defmodule PromptsIndex do
         <p class="mt-10">Prompts serve as instructions to exctract information from your lectures.</p>
         <strong>Totally tailored to your needs.</strong>
 
-        <div>
+        <div class="w-full">
           <%= if length(@prompts) === 0 do %>
             <p class="mt-10">You don't have any prompts yet. <.link navigate={~p"/prompts/new"} class="text-brand hover:underline">Let's create a new one.</.link></p>
           <% end %>
@@ -20,27 +20,8 @@ defmodule PromptsIndex do
           <% end %>
 
           <%= for prompt <- @prompts do %>
-            <div class="flex items-center gap-x-4 mb-6">
+            <div class="mb-6">
               <.live_component module={PromptCard} prompt={prompt} id={prompt.id} />
-
-              <.input
-                type="checkbox"
-                phx-value-prompt-id={prompt.id}
-                name={"Enabled #{prompt.id}"}
-                value={prompt.id}
-                checked={prompt.enabled}
-                phx-click="prompt_toggled"
-              />
-
-              <.simple_form class="flex items-center !mt-0" method="delete" action={~p"/prompts/#{prompt.id}"} for={%{"id" => prompt.id}}>
-                <:actions>
-                    <.button
-                      class="bg-transparent flex items-center px-0 py-0 hover:bg-transparent focus:bg-transparent"
-                    >
-                      <span class="material-symbols-outlined text-red-400 hover:text-red-700 focus:text-red-700">delete</span>
-                    </.button>
-                </:actions>
-              </.simple_form>
             </div>
           <% end %>
         </div>
