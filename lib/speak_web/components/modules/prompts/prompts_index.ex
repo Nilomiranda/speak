@@ -1,5 +1,6 @@
 defmodule PromptsIndex do
   use SpeakWeb, :live_component
+  import PromptComponents
 
   def render(assigns) do
     ~H"""
@@ -21,7 +22,7 @@ defmodule PromptsIndex do
 
           <%= for prompt <- @prompts do %>
             <div class="flex items-center gap-x-4 mb-6">
-              <span contenteditable="true" phx-blur="prompt_blurred" phx-value-id={prompt.message}><%= prompt.message %></span>
+              <.prompt_card prompt={prompt} />
 
               <.input
                 type="checkbox"

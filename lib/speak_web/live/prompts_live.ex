@@ -51,10 +51,9 @@ defmodule SpeakWeb.PromptsLive do
     end
   end
 
-  def handle_event("prompt_blurred", %{"id" => prompt_id, "value" => value}, socket) do
+  def handle_event("prompt-blurred", %{"id" => prompt_id}, socket) do
     IO.inspect "params"
     IO.inspect prompt_id
-    IO.inspect value
 
     {:noreply, socket}
   end
