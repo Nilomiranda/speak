@@ -4,8 +4,8 @@ import Config
 config :speak, Speak.Repo,
   # local development
 
-  username: "danilo",
-  password: "danilo",
+  username: "admin",
+  password: "admin",
   hostname: "localhost",
   database: "speak_dev",
   stacktrace: true,
