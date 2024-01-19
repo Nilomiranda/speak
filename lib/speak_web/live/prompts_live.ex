@@ -51,13 +51,7 @@ defmodule SpeakWeb.PromptsLive do
     end
   end
 
-  def handle_event("prompt-on-edit", %{"id" => prompt_id, "value" => updated_value, "old-content" => old_content}, socket) do
-    IO.inspect "id"
-    IO.inspect prompt_id
-
-    IO.inspect "new content"
-    IO.inspect updated_value
-
+  def handle_event("edited", %{"id" => prompt_id, "value" => updated_value, "old-content" => old_content}, socket) do
     unless old_content === updated_value do
       case Prompts.update_message_by_user_and_prompt_id(prompt_id, socket.assigns.current_user.id, updated_value) do
         {:ok} ->
@@ -66,6 +60,16 @@ defmodule SpeakWeb.PromptsLive do
           {:noreply, socket |> put_flash(:error, "Couldn't update prompt. Please try again.")}
       end
     end
+
+    {:noreply, socket}
+  end
+
+  def handle_event("edited", _params, socket) do
+    # This handles the phx-submit="edited"
+    # When form is submitted with enter
+    # The input's blur event trigger, which is handled by the
+    # function above, so edition save is already taken care of
+    # Nothing needs to happen in this action from the form submission anymore
 
     {:noreply, socket}
   end
