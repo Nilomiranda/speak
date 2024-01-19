@@ -51,9 +51,21 @@ defmodule SpeakWeb.PromptsLive do
     end
   end
 
-  def handle_event("prompt-blurred", %{"id" => prompt_id}, socket) do
-    IO.inspect "params"
+  def handle_event("prompt-on-edit", %{"id" => prompt_id, "value" => updated_value, "old-content" => old_content}, socket) do
+    IO.inspect "id"
     IO.inspect prompt_id
+
+    IO.inspect "new content"
+    IO.inspect updated_value
+
+    unless old_content === updated_value do
+      case Prompts.update_message_by_user_and_prompt_id(prompt_id, socket.assigns.current_user.id, updated_value) do
+        {:ok} ->
+          {:noreply, socket |> put_flash(:info, "Prompt updated successfully.")}
+        {:error} ->
+          {:noreply, socket |> put_flash(:error, "Couldn't update prompt. Please try again.")}
+      end
+    end
 
     {:noreply, socket}
   end

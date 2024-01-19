@@ -19,11 +19,15 @@ defmodule PromptCard do
         />
 
         <.input
+          placeholder={@prompt.message}
           type="text"
           name={@prompt.id}
           value={@prompt.message}
           wrapper_class="w-full"
           class={"border-none p-0 sm:text-base !mt-0"}
+          phx-blur="prompt-on-edit"
+          phx-value-id={@prompt.id}
+          phx-value-old-content={@prompt.message}
         />
 
         <.simple_form class="flex items-center !mt-0" method="delete" action={~p"/prompts/#{@prompt.id}"} for={%{"id" => @prompt.id}}>

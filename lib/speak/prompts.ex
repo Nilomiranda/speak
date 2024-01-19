@@ -67,4 +67,16 @@ defmodule Speak.Prompts do
 
     prompt_to_delete |> Repo.delete()
   end
+
+  def update_message_by_user_and_prompt_id(id, user_id, message) do
+    query = from prompt in Prompt, where: prompt.user_id == ^user_id and prompt.id == ^id
+    prompt = query |> Repo.one
+
+    updated_prompt = Ecto.Changeset.change prompt, message: message
+
+    case Repo.update updated_prompt do
+      {:ok, _struct} -> {:ok}
+      {:error, _changeset} -> {:error}
+    end
+  end
 end
