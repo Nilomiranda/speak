@@ -4,10 +4,11 @@ import Config
 config :speak, Speak.Repo,
   # local development
 
-  username: "admin",
-  password: "admin",
-  hostname: "localhost",
-  database: "speak_dev",
+  username: System.get_env("DEV_DB_USER"),
+  password: System.get_env("DEV_DB_PASSWORD"),
+  hostname: System.get_env("DEV_DB_HOST"),
+  database: System.get_env("DEV_DB_NAME"),
+  port: System.get_env("DEV_DB_PORT"),
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -44,12 +45,12 @@ config :speak, SpeakWeb.Endpoint,
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   # http: [ip: {127, 0, 0, 1}, port: 4000],
   http: [port: 4000],
-  https: [
-    port: 4001,
-    cipher_suite: :strong,
-    certfile: "priv/cert/selfsigned.pem",
-    keyfile: "priv/cert/selfsigned_key.pem"
-  ],
+  # https: [
+  #   port: 4001,
+  #   cipher_suite: :strong,
+  #   certfile: "priv/cert/selfsigned.pem",
+  #   keyfile: "priv/cert/selfsigned_key.pem"
+  # ],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
