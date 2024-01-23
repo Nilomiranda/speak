@@ -60,6 +60,9 @@ defmodule SpeakWeb.LecturesLive do
   end
 
   def handle_event("save", %{"lecture" => lecture_params}, socket) do
+    IO.inspect "lecture_params"
+    IO.inspect lecture_params
+
     case Lectures.save_lecture(lecture_params, socket.assigns.current_user.id) do
       {:ok, lecture} ->
         changeset = Lectures.change_lecture_creation(lecture)

@@ -22,6 +22,9 @@ defmodule LectureForm do
               <.input field={@form[:name]} label="Name" required wrapper_class="flex-1" />
               <.input field={@form[:description]} label="Description" wrapper_class="flex-1" />
             </div>
+
+            <.input field={@form[:file]} type="file" label="Select an audio file" />
+
             <.input field={@form[:content]} label="Content" type="textarea" required class="h-[400px]" />
 
             <:actions>
